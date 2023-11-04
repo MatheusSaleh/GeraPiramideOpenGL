@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace openTK3D
 {
@@ -13,26 +14,35 @@ namespace openTK3D
         Vector3d dir = new Vector3d(0, -450, 120);        //direção da câmera
         Vector3d pos = new Vector3d(0, -550, 120);     //posiçãoo da câmera
         float camera_rotation = 0;                     //rotação no eixo Z
-
         int sides = 3;
+
+
 
         public OpenTK3D()
         {
             InitializeComponent();
         }
 
-        private void glControl1_Paint(object sender, PaintEventArgs e)
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
+           
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            int sides = (int)numericUpDown1.Value;
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
 
-            GL.Translate(0, 0, -5); 
+            GL.Translate(0, 0, -5);
 
-            
+
             GL.Begin(PrimitiveType.Triangles);
 
-            
+
             for (int i = 0; i < sides; i++)
             {
                 double angle1 = 2 * Math.PI * i / sides;
@@ -48,6 +58,10 @@ namespace openTK3D
 
             GL.End();
             glControl1.SwapBuffers();
+        }
+        private void glControl1_Paint(object sender, PaintEventArgs e)
+        {
+            
         }
         private void glControl1_Load(object sender, EventArgs e)
         {
@@ -174,11 +188,5 @@ namespace openTK3D
         }
 
 
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            sides = int.Parse(comboBox1.SelectedItem.ToString());
-            glControl1.Invalidate();
-        }
     }
 }
